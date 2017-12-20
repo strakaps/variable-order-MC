@@ -24,7 +24,7 @@ Given drift and diffusivity functions *a*(*x*) and *b*(*x*), jumps are simulated
 drawJ <- function(x) rnorm(n = 1, mean = b(x)/c, sd = sqrt(a(x)/c))
 ```
 
-Given a vector of times `endTimes`, this function returns the location of one CTRW trajectory at these times (first column) and the number of steps taken in the time interval (0, endTime).
+Given a vector of times `endTimes` (e.g. 0.125, 0.25, 0.5, 1, 2, 4, 8), this function returns the location of one CTRW trajectory at these times (first column) and the number of steps taken in the time interval (0, endTime) (second column).
 
 ``` r
 propagateCTRW <- function(startLocation, endTimes){

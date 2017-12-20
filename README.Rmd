@@ -26,9 +26,8 @@ via
 drawJ <- function(x) rnorm(n = 1, mean = b(x)/c, sd = sqrt(a(x)/c))
 ```
 
-Given a vector of times `endTimes`, this function returns the location 
-of one CTRW trajectory at these times (first column) and the number of steps taken 
-in the time interval $(0, \text{endTime})$. 
+Given a vector of times `endTimes` (e.g. `r 2^(-3:3)`), this function returns the location 
+of one CTRW trajectory at these times (first column) and the number of steps taken in the time interval $(0, \text{endTime})$ (second column). 
 
 ```{r}
 propagateCTRW <- function(startLocation, endTimes){
@@ -72,7 +71,7 @@ ensemble2 <- array(dim=c(0,length(tEnd),2))
 This block generates a number of trajectories and appends their values 
 to `ensemble1`. Run it multiple times if more trajectories are needed. 
 
-```{r}
+```{r, cache=TRUE}
 timescale <- 1
 startX <- 0
 a <- function(x) timescale^(-beta(x))
@@ -95,7 +94,7 @@ if (mean(ensemble1[,1,2]) < 30) print("Careful: not enough steps. Increase c.")
 
 Identical to the above block. Run multiple times if more trajectories needed. 
 
-```{r}
+```{r, cache=TRUE}
 timescale <- 10
 startX <- 0
 a <- function(x) timescale^(-beta(x))
@@ -119,7 +118,7 @@ if (mean(ensemble2[,1,2]) < 30) print("Careful: not enough steps. Increase c.")
 the times `r tEnd` and `r 10 * tEnd`.  Apply the kernel density estimator 
 `density()` from the `stats` package and plot the densities: 
 
-```{r plot-together, echo=FALSE}
+```{r plot-together, echo=FALSE, cache=TRUE}
 par(mfrow=c(1,2))
 plot(density(ensemble1[,1,1]), xlim = c(-2,6), ylim = c(0,0.85), type = 'n', 
      main = "Timescale = 1", xlab='x')
