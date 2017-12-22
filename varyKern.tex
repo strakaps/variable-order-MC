@@ -5,6 +5,7 @@
 \usepackage{graphicx}
 \usepackage{url}
 \usepackage{natbib}
+\bibliographystyle{abbrvnat}
 \usepackage{hyperref}
 
 \numberwithin{equation}{section}
@@ -38,30 +39,43 @@
 Continuous Time Random Walks}
 \author[UNSW]{Peter Straka}
 \ead{p.straka@unsw.edu.au}
-\address[UNSW]{School of Mathematics \& Statistics, UNSW Sydney}
+\address[UNSW]{School of Mathematics \& Statistics, UNSW Sydney, Sydney NSW 2052, Australia}
 
 
 \begin{abstract}
-We consider subdiffusive scaling limits of Continuous Time Random Walks (CTRWs),
-in the case where the distribution of the waiting times and thus
-the resulting memory kernel varies with the location in space.  We first 
-establish a 
-one-to-one correspondence between CTRW limit processes and Langevin processes in 
-space-time.  In this space-time representation, the evolution of the waiting 
-times is readily governed by varying their L\'evy measure and drift in space. 
-In the case of fractional diffusion and tempered fractional diffusion, this 
-can be expressed via a varying fractional parameter $\beta(x) \in (0,1)$ and/or 
-a varying tempering parameter $\theta(x) \ge 0$, as well as a varying 
-``temporal drift'' parameter $d(x) \ge 0$. 
-We then use a result from the mathematics literature which identifies the 
-probability distributions of a CTRW limit process with the unique solution 
-of a Fokker-Planck equation with memory.  We then focus on the situation where the CTRW 
-dynamics are locally fractional with parameter $\beta(x)$.  We rigorously derive 
-the variable order fractional Fokker-Planck equation (FFPE) from the CTRW limit.  This equation 
-displays a unique temporal scaling behaviour: given a time scale parameter $T_0$, the factor $T_0^{-\beta(x)}$ 
-enters in both the drift and diffusivity coefficients of the Fokker-Planck operator.  
-We present Monte Carlo simulations which show that solutions to the variable 
-order FFPE are consistent at different time scales. 
+% purpose, results, conclusion
+Continuous Time Random Walk models (CTRW) of anomalous diffusion are 
+studied, 
+where the anomalous exponent $\beta(x) \in (0,1)$ varies in space.  This 
+type of situation occurs e.g.\ in biophysics, where the density of the 
+intracellular matrix varies throughout a cell.  Scaling limits of CTRWs
+are known to have probability distributions which solve fractional 
+Fokker-Planck type equations (FFPE).  This correspondence between 
+stochastic processes and FFPE solutions has many useful extensions e.g.\ 
+to nonlinear particle interactions and reactions, but has not yet been
+established for FFPEs of the``variable order'' type with non-constant 
+$\beta(x)$. 
+
+In this article, variable order FFPEs (VOFFPE) are derived from scaling 
+limits of CTRWs.  The key mathematical tool is the 1-1 correspondence 
+of a CTRW scaling limit to a bivariate Langevin process, which tracks the
+cumulative sum of jumps in one component and the cumulative sum of waiting 
+times in the other. The spatially varying anomalous exponent is
+modelled by spatially varying $\beta(x)$-stable L\'evy noise in the 
+waiting time component. 
+%An existing result from the mathematics literature is used to derive a 
+%unique VOFFPE from the CTRW limit.  
+The VOFFPE displays a unique temporal 
+scaling behaviour: at a time scale $T_0$, the factor $T_0^{-\beta(x)}$ 
+enters in both the drift and diffusivity coefficients of the Fokker-Planck 
+operator.  
+
+A consequence of the mathematical derivation of a VOFFPE from CTRW limits 
+in this article is that a solution of a VOFFPE can be approximated via 
+Monte Carlo simulations.  
+We check the consistency of VOFFPEs at two different time scales $T_0$ by 
+calculating probability densities at a sequence of times.
+
 \end{abstract}
 
 % Cover Letter
@@ -82,7 +96,7 @@ order FFPE are consistent at different time scales.
 
 
 \begin{keyword}
-Anomalous Diffusion \sep Continuous Time Random Walk \sep Fractional Derivative \sep Variable Order \sep stochastic process limit \sep L\'evy process \sep Fokker-Planck
+Anomalous Diffusion \sep Continuous Time Random Walk \sep Fractional Derivative \sep Variable Order \sep stochastic process limit \sep L\'evy process
 \MSC[2010] 60F17 \sep  60G22
 \end{keyword}
 
@@ -111,25 +125,22 @@ fractional parameter $0 < \beta < 1$ is treated as a global constant.  The
 situation where $\beta$ varies in space, however, is of interest in physics,
 since the strength of a trapping effect may vary throughout a disordered
 medium
-\cite{Chechkin2005a,Korabel2010,Stickler2011,Fedotov2012,StrakaFedotov14}.
+\cite{Wong04,Chechkin2005a,Korabel2010,Stickler2011,Fedotov2012,StrakaFedotov14}.
 The experiments in \cite{Wong04} find that for the diffusion of a bead in
 F-actin networks, the fractional parameter depends solely on the ratio of
 bead size to mesh width, and hence a physical system with continuously varying
-fractional parameter could be constructed.
+fractional parameter can be designed.
 
 There are various works in the computational literature that consider ``variable
 order'' fractional subdiffusion equations (see e.g.\ \cite{Chen2010,Sun2009} and
 the references therein). Candidate fractional differential equations of
-variable order for a spatially varying subdiffusive system are:
+variable order for a spatially varying subdiffusive system are
+(\cite[Eq.(8)]{Sun2009} and \cite[Eq.(1.2)]{Chen2010}, respectively):
 \begin{align}
 \label{eq:wrong1}
-  &\cite[Eq.(8)]{Sun2009}:
-  &
   D_t^{\beta(x)} u(x,t) &= K \frac{\partial^2 u(x,t)}{\partial x^2}
   \\
   \label{eq:wrong2}
-  &\cite[Eq.(1.2)]{Chen2010}:
-  &
   \frac{\partial u(x,t)}{\partial t} &= K {_0 D_t^{1-\beta(x)}}
   \frac{\partial^2 u(x,t)}{\partial x^2} + f(x,t)
 \end{align}
@@ -157,7 +168,8 @@ We note the following issues in the applicability of these two prototypes:
   and allow extensions for chemical reactions or other particle interaction.
 \end{itemize}
 
-In this article, we resolve the issues above.  We provide a general approach
+In this article, we resolve the above issues. We provide a general 
+approach
 which represents CTRW scaling limits as Langevin processes in space-time
 $\spctim$.  In the space-time setting, spatially varying parameters for the
 waiting time distribution are mathematically tractable and dimensionally
@@ -259,16 +271,16 @@ to these Langevin processes.
 
 \paragraph{Poisson Random Measure}
 The standard construction of L\'evy noise is via Poisson Random Measures
-\cite{Applebaum}.  We describe an approach which is amenable to spatially 
-varying coefficients. 
+\cite{Applebaum}.  We describe an approach which is amenable to a 
+spatially varying coefficient $\beta(x)$. 
 We first define the mean measure $M$ to be the Lebesgue measure on 
 $(0,\infty) \times [0,\infty)$; the first component $(0,\infty)$ corresponds 
 to the size of the jumps $w > 0$ of the temporal component $Z_u$, whereas $[0,\infty)$
-corresponds to an auxiliary time, during which these jumps accumulate. 
-Lebesgue measure is nothing but the surface measure, defined by the requirement 
+corresponds to an auxiliary (or ``operational'') time, during which these jumps accumulate. 
+Lebesgue measure is nothing but the surface measure, defined uniquely by the requirement 
 that a rectangle $B = (a,b) \times (c,d) \subset (0,\infty) \times [0,\infty)$
 have the measure $M(B) = (b-a)(d-c)$.  
-A Poisson Random Measure with intensity measure $M$ is a random measure 
+A Poisson Random Measure with intensity measure $M$ then is a random measure 
 $N(dw, ds) = \sum_{r \in \mathcal R} \delta_{r}(dw, ds)$ where $\delta_r$ 
 denotes a Dirac point measure at the point $r \in (0,\infty) \times [0,\infty)$
 and $\mathcal R \subset (0,\infty) \times [0,\infty)$ is a random set of points 
@@ -361,22 +373,24 @@ We also make the coefficient function \eqref{eq:general-F} space-dependent via
   \right\rbrace,
 \end{align}
 where $\overline \nu(z | x) = \int_z^\infty \nu(w'|x)\,dw'$.
-Thus $Z_u$ is a tempered stable subordinator with parameters $\beta(x)$ and 
-$\theta(x)$. 
+Then $Z_u$ as defined in \eqref{eq:summed-noise} becomes a tempered stable 
+subordinator with variable parameters $\beta(x)$ and $\theta(x)$. 
 We have now set up the necessary tools for the limiting Langevin 
 dynamics $(Y_u, Z_u)$ in space-time.
 
 \paragraph{Space-time Langevin Process}
-The class of scaling limits $(Y_u, Z_u)$ which is suitable for our CTRW setting 
-is given by the following type of Langevin process in $\spctim$: 
+Before we discuss the stochastic process scaling limit mechanism, we 
+define the class of scaling limits $(Y_u, Z_u)$ which is suitable for our CTRW setting. This class consists of all of Langevin processes in 
+$\spctim$ of the form
 \begin{align} \label{eq:SDEY}
-dY_u &= b(Y_{u-}, Z_{u-})\,du + a(Y_{u-}, Z_{u-})\, dW_u \\
+dY_u &= b(Y_{u}, Z_{u})\,du + a(Y_{u}, Z_{u})\, dW_u \\
 \label{eq:SDEZ}
-dZ_u &= d(Y_{u-})\,du + \int_{w > 0} F(w | Y_{u-}) \, N(dw, du).
+dZ_u &= d(Y_{u})\,du + \int_{w > 0} F(w | Y_{u}) \, N(dw, du).
 \end{align}
 Here $Y_u$ denotes location in space; $Z_u$ the corresponding (physical) time;
 $u$ denotes auxiliary time, resulting from the rescaled number of CTRW steps;
-$W_u$ is independent Gaussian noise; $b$ and $a$ are space- and time-dependent
+$W_u$ is an independent Brownian motion; 
+$b$ and $a$ are space- and time-dependent
 spatial drift resp.\ diffusivity functions; $d \ge 0$ is a temporal drift coefficient function;
 and $F$ is as in \eqref{eq:varying-general-F}.
 
@@ -422,7 +436,7 @@ $C_0(\spctim)$ of continuous  functions on $\spctim$ which vanish at $\infty$},
 and $\langle \, \rangle_{(x,s)}$ denotes the ensemble average over all
 trajectories starting at $(x,s)$ \cite{Applebaum}. The domain of $\mathcal A$ contains the twice
 continuously differentiable functions, and $\mathcal A$ has the following
-form:
+form \cite[Section 6.7.1]{Applebaum}:
 \begin{align} \label{eq:inf-gen}
 \begin{split}
 \mathcal A f(x,s)
@@ -436,34 +450,33 @@ form:
 We note three assumptions that have gone into \eqref{eq:inf-gen}: 
 \begin{itemize}
 \item
-As $Z_u$ is a scaling limit of sums of positive waiting times,
+As $Z_u$ is a scaling limit of sums of positive waiting times and 
+$\beta(x) \in (0,1)$,
 we may restrict $Z_u$ to be non-decreasing; this means that
 $Z_u$ has no diffusive component (i.e.\ the second derivative only applies to 
 the spatial variable), that $\nu(w|x) = 0$ for $w \le 0$
 (only positive jumps), and $d(x) \ge 0$.
 \item
 We assume that $Y_u$ is continuous (does not jump),
-and so the L\'evy noise only enters the temporal component $Z_u$.
+and so there is no L\'evy noise that drives $Y_u$.
 \item
 The distribution of waiting times is assumed to depend on space only and not
 on the current time; hence $d(x)$ and $\nu(w|x)$ only depend on $x$ and not on $s$.
 \end{itemize}
 
 \paragraph{Conditions for stochastic process convergence}
-Define the following continuous time Markov jump process $(Y^{(c)}_u, Z^{(c)}_u)$ on 
-$\spctim$: at location $(x,s)$, wait an amount of time which is exponentially distributed with mean $1/c$. (This time is in ``auxiliary time'', and is not a CTRW waiting time!) Then jump to the location $(x+y, s+w)$, where the distribution of $(y,w)$ is determined by \eqref{eq:STJK}, and repeat. 
-
-It then follows (see e.g.\ \cite[Proposition 17.2]{Kallenberg}) that 
-$(Y^{(c)}_u, Z^{(c)}_u)$ has the infinitesimal generator
+First, define the following continuous time Markov jump process $(Y^{(c)}_u, Z^{(c)}_u)$ on 
+$\spctim$: at location $(x,s)$, wait an amount of time which is exponentially distributed with mean $1/c$. (This time is in ``auxiliary time'', and is not a CTRW waiting time!) Then jump to the location $(x+y, s+w)$, where the distribution of $(y,w)$ is determined by \eqref{eq:STJK}, and repeat. The resulting process has the infinitesimal generator
+(see e.g.\ \cite[Proposition 17.2]{Kallenberg}) 
 \begin{align} \label{eq:jump-process-generator}
-\mathcal A^{(c)} f(x,s) = c \int [f(x+y, s+w) - f(x,s)] K^{(c)}(y,w | x,s)\,dy\,dw.
+\mathcal A^{(c)} f(x,s) = c \iint [f(x+y, s+w) - f(x,s)] K^{(c)}(y,w | x,s)\,dy\,dw.
 \end{align}
-A key result is \cite[Theorem 17.25]{Kallenberg}, which says that we may characterize convergence as follows:\footnote{The convergence on the left side of \eqref{eq:generator-condition} is in the sense of stochastic processes with respect to the Skorokhod $J_1$ topology, see e.g.\ \cite{Whitt2010}. The right side must hold for all $f$ from the domain of $\mathcal A$, which is a dense subset of the function space $C_0(\spctim)$ of continuous real-valued functions defined on $\spctim$ which vanish at $\infty$).}
+A key result for Feller processes is that stochastic process convergence is equivalent to the convergence of infinitesimal generators \cite[Theorem 17.25]{Kallenberg}:\footnote{The convergence on the left side of \eqref{eq:generator-condition} is in the sense of stochastic processes with respect to the Skorokhod $J_1$ topology, see e.g.\ \cite{Whitt2010}. The right side must hold for all $f$ from the domain of $\mathcal A$, which is a dense subset of the function space $C_0(\spctim)$ of continuous real-valued functions defined on $\spctim$ which vanish at $\infty$).}
 \begin{align} \label{eq:generator-condition}
 \lim_{c \to \infty}(Y^{(c)}_u, Z^{(c)}_u) = (Y_u, Z_u)
 \text{ if and only if }
 \lim_{c \to \infty} \mathcal A^{(c)}f(x,s) = \mathcal A f(x,s), 
-f \in {\rm Dom}(\mathcal A)
+\quad f \in {\rm Dom}(\mathcal A)
 \end{align}
 The two theorems below connect \eqref{eq:generator-condition} to the convergence of CTRWs: 
 
@@ -472,21 +485,21 @@ The right side of \eqref{eq:generator-condition} holds if the following
 conditions all hold: 
 \begin{align} \label{eq:cond1}
 \lim_{\epsilon \downarrow 0} \lim_{c \to \infty}
-c \iint\limits_{|y|< \epsilon,\,0<  w < \epsilon} y K^{(c)}(y,w | x,s)\,dy\,dw &= b(x,s)
+c \iint\limits_{|z|< \epsilon,\,0<  w < \epsilon} z K^{(c)}(z,w | x,s)\,dz\,dw &= b(x,s)
 \\ \label{eq:cond2}
 \lim_{\epsilon \downarrow 0} \lim_{c \to \infty}
-c \iint\limits_{|y|< \epsilon, \,0<w < \epsilon} y^2 K^{(c)}(y,w | x,s)\,dy\,dw &= a(x,s)
+c \iint\limits_{|z|< \epsilon, \,0<w < \epsilon} z^2 K^{(c)}(z,w | x,s)\,dz\,dw &= a(x,s)
 \\ \label{eq:cond3}
 \lim_{\epsilon \downarrow 0} \lim_{c \to \infty}
-c \iint\limits_{|y|< \epsilon, \,0<w < \epsilon} w K^{(c)}(y,w | x,s)\,dy\,dw &= d(x)
+c \iint\limits_{|z|< \epsilon, \,0<w < \epsilon} w K^{(c)}(z,w | x,s)\,dz\,dw &= d(x)
 \\
 \label{eq:cond4}
 \lim_{c \to \infty}
-c \iint\limits_{|y| \ge \varepsilon \text{ or } w \ge 0} g(y,w) K^{(c)} (y,w | x,s)\,dy\,dw &= \int g(0,w) \nu(w|x)\,dw
+c \iint\limits_{|z| \ge \varepsilon \text{ or } w \ge 0} g(z,w) K^{(c)} (z,w | x,s)\,dz\,dw &= \int g(0,w) \nu(w|x)\,dw, \quad \varepsilon > 0,
 \end{align}
-where $g(y,w)$ is any bounded measurable function which vanishes in a neighbourhood of the origin. 
+where $g(z,w)$ is any bounded continuous function which vanishes in a neighbourhood of the origin. 
 \end{theorem}
-
+A proof of Theorem~\ref{theorem1} is given in \ref{sec:app-pf-th}. 
 
 \begin{theorem}
 The left side of \eqref{eq:generator-condition} implies that 
@@ -497,11 +510,11 @@ where $X^{(c)}_t$ is as in \eqref{eq:CTRW-trajectory}, and
 \begin{align} \label{eq:subordination}
 X_t = Y_{E(t)} \text{ where } E(t) = \inf\{u: Z_u > t\}.
 \end{align}
-The limit in \eqref{eq:CTRW-limit} is in the sense of stochastic processes with respect to the Skorokhod $J_1$ topology. 
+The limit in \eqref{eq:CTRW-limit} is in the sense of stochastic processes with respect to the Skorokhod $J_1$ topology \cite{Whitt2010}. 
 \end{theorem}
 \begin{proof}
 The path mapping from $u \mapsto (Y^{(c)}_u, Z^{(c)}_u)$ to $t \mapsto X^{(c)}_t$
-is continuous \cite{StrakaHenry}, and hence the theorem follows from an application of the continuous mapping theorem \cite{Billingsley1968}. 
+is continuous \cite{StrakaHenry}, and hence the theorem follows from an application of the continuous mapping theorem \cite{Billingsley1968, StrakaHenry}. 
 \end{proof}
 
 Putting together the two theorems and result \eqref{eq:generator-condition}, 
@@ -543,7 +556,7 @@ Finally, using
 \end{align}
 \eqref{eq:cond3} follows from \eqref{eq:local-psi} and 
 \eqref{eq:cond4} from \eqref{eq:non-local-psi}.
-More details are in the appendix in Section~\ref{subsec:calc-for-example}.
+More details are in \ref{subsec:calc-for-example}.
 \end{example}
 
 
@@ -589,9 +602,12 @@ transform\footnote{To see that this definition is equivalent to Proposition 5.1
 in \cite{BaeumerStraka16}, note that $H(y,w) \equiv \overline \nu(w|y) = \int_w^\infty \nu(w|y)$,
 and apply integration by parts.}
 \begin{align} \label{eq:LT-renewal-measure}
+\begin{split}
 \hat V(y,\lambda) = \int_0^\infty e^{-\lambda t} V(y,t)\,dt
-= \frac{1}{d(y)\lambda + \int_0^\infty (1-e^{-\lambda w})
-\nu(w | y)\,dw}.
+&= \frac{1}{d(y)\lambda + \int_0^\infty (1-e^{-\lambda w})
+\nu(w | y)\,dw}
+= \frac{1}{\lambda} \, \frac{1}{d(y) + \hat{\overline{\nu}}(\lambda|y)}.
+\end{split}
 \end{align}
 
 \paragraph{Renewal measure}
@@ -607,13 +623,14 @@ By the L\'evy-Khintchine theorem (see e.g.\ \cite{Bertoin04} for its form
 for subordinators), its Laplace transform is
 $\langle e^{-\lambda Z_u(x)} \rangle = e^{-u \Upsilon(\lambda|x)}$, where the
 so-called L\'evy symbol $\Upsilon(\lambda|x)$ is
-\begin{align}
+\begin{align} \label{eq:symbol}
 \Upsilon(\lambda|x) = d(x) \lambda + \int_0^\infty (1-e^{-\lambda w})
 \nu(w|x)\, dw.  
 \end{align}
 Moreover, $1/\Upsilon(\lambda| x) = \hat V(x, \lambda)$ is the Laplace
 transform of the renewal measure density $V(x,s)$ of $Z_u(x)$, which measures
-the expected occupation time of $Z_u(x)$ (see e.g.\ \cite[Eq.(15)]{MMMPS12}, or \cite{Bertoin04}):
+the expected occupation time of $Z_u(x)$ (see e.g.\ 
+\cite[Eq.(15)]{MMMPS12}, or \cite{Bertoin04}):
 \begin{align}
 \int_a^b V(x,s)\, ds = \left \langle \int_0^\infty \1(a < Z_u(x) < b)\,du
 \right \rangle,  
@@ -629,6 +646,39 @@ in \eqref{eq:FFPE} are hence a quantitiy of unit
 and the Fokker-Planck operator of unit ``1 / auxiliary time'',
 thus giving \eqref{eq:FFPE} a dimensionally consistent interpretation.
 
+\begin{remark}
+The temporal drift coefficient $d(x)$ in \eqref{eq:symbol} has a more
+straightforward representation in a less general case:  
+Assume that 
+$\nu(w|y) \equiv \nu(w)$ and $d(x) \equiv d$ do not depend on $x$, 
+and that drift $b(x,t)$ and diffusivity $a(x,t)$ are constant in $t$.  
+Then by comparison of Laplace transforms, it follows that \eqref{eq:FFPE}
+is equivalent to 
+\begin{align} \label{eq:distributed-order}
+d\,\frac{\del }{\del t} P(y,t) 
++ \int_0^t \left[\frac{\del }{\del t} P(y,t-s)\right] 
+\overline{\nu}(s)\,ds = \mathcal L^* P(y,t) 
++ H(y,t)
+\end{align}
+where $H(y,t) = dh(y,t) + \int h(y,t-s) \overline \nu(s)\,ds$.
+Three special cases are of interest:
+\begin{itemize}
+\item
+If $d=1$ and $\nu(w) \equiv 0$, then \eqref{eq:distributed-order} 
+reduces to the (non-fractional) Fokker-Planck equation. 
+\item
+If $d=0$ and $\nu(w)$ is as in \eqref{eq:stable-levy-measure}, then 
+\eqref{eq:distributed-order} becomes the governing equation for 
+Hamiltonian chaos in the sense of \cite{Zaslavsky94}, see also 
+Eq.(24) in \cite{Baeumer2001}. 
+\item
+If $d \ge 0$ and $\nu(w)$ is as in 
+\eqref{eq:stable-levy-measure}, then 
+\eqref{eq:distributed-order} is a special case of a ``distributed order'' 
+FFPE \cite{Sandev2015}, where the distribution over the orders 
+is a mixture of the two orders $1$ and $\beta$.
+\end{itemize}
+\end{remark}
 
 \paragraph{Inhomogeneous scaling}
 For spatially varying tempered subdiffusion, i.e.\ when $\nu(w|x)$ has the form 
@@ -642,7 +692,9 @@ We are only able to invert the Laplace transform in the case $d \equiv 0$ and
 $\theta \equiv 0$, whence $V(y,t) = t^{\beta(y)-1} / \Gamma(\beta(y))$; 
 for the remainder of this article, we restrict ourselves to this case.
 To make the spatio-temporal scaling in the dynamics explicit, we introduce the time scales
-$T_0$ for physical time, $A_0$ for auxiliary time and $L_0$ for length:
+$T_0$ for physical time, $A_0$ for auxiliary time and $L_0$ for length, 
+and recall that $V(y,t)$ measures unit auxiliary time per unit physical 
+time:
 $$V(y,t) = \frac{(t/T_0)^{\beta(y)-1}}{\Gamma(\beta(y))}\, \frac{A_0}{T_0}
 = \frac{A_0}{T_0^{\beta(y)}} \, \frac{t^{\beta(y) - 1}}{\Gamma(\beta(y))}$$
 and
@@ -672,8 +724,9 @@ Now note that the graphs of the two processes, i.e.\ the sets
 have different distributions, whereas the \emph{images}
 \begin{align*}
 \{(Y_u, Z_u): u \ge 0\} \quad \text{ and } \quad 
-\{(Y_{Cu}, Z_{Cu}): u \ge 0\}
+\{(Y_{Cu}, Z_{Cu}): u \ge 0\},
 \end{align*}
+i.e.\ the points traversed by $(Y_u,Z_u)$ resp.\ $(Y_{Cu}, Z_{Cu})$, 
 have identical distributions. 
 Since the CTRW scaling limit is uniquely constructed from the image via 
 \eqref{eq:subordination},
@@ -686,15 +739,27 @@ there is no globally valid diffusion constant of dimensionality $L_0^2 / T_0^\be
 Equation
 \eqref{eq:FFPE-with-scale} reflects this spatially inhomogeneous behaviour
 via the $T_0^{-\beta(y)}$ term, which is effectively multiplied onto the
-coefficient functions $a(y,t)$ and $b(y,t)$.  In Section \ref{sec:examples}
-we confirm that equation \eqref{eq:FFPE-with-scale} is consistent at 
+coefficient functions $a(y,t)$ and $b(y,t)$.  
+In Section~\ref{sec:examples}
+we confirm that equation \eqref{eq:FFPE-with-scale} is consistent with 
 different temporal scales $T_0$. 
 
 
 \section{Monte Carlo approximation of an FFPE solution}
 \label{sec:examples}
 
-In \cite{Korabel2010}, the authors study an interface problem, where for $x<0$ the medium is more subdiffusive ($\beta = 0.3$) than for $x>0$ ($\beta = 0.75$).  Even if a positive drift is applied at the interface, eventually all particles end up in the left half, even though the first moment $\langle x \rangle$ of the solution is always increasing. The reason for this ``paradoxical'' behaviour is as follows: the random walk on the infinite line is recurrent, i.e.\ each point is due to be visited an infinite number of times. Since the heavier-tailed waiting times in the left dominate the waiting times in the right, as $t \to \infty$ particles tend to be trapped in the left. Compared to the left, particles on the right are freely moving, and hence spread out further towards $+\infty$, hence the mean $\langle x \rangle$ is ever increasing. 
+In \cite{Korabel2010}, the authors study an interface problem, where for 
+$x<0$ the medium is more subdiffusive ($\beta = 0.3$) than for $x>0$ 
+(where $\beta = 0.75$).  Even if a positive drift is applied at the 
+interface, eventually all particles end up in the left half, even though 
+the first moment $\langle x \rangle$ of the solution is always increasing. 
+The reason for this ``paradoxical'' behaviour is as follows: the random 
+walk on the infinite line is recurrent, i.e.\ each point is due to be 
+visited an infinite number of times. Since the heavier-tailed waiting 
+times in the left dominate the waiting times in the right, as $t \to 
+\infty$ particles tend to be trapped in the left. Compared to the left, 
+particles on the right are moving freely, and hence spread out further 
+towards $+\infty$, hence the mean $\langle x \rangle$ is ever increasing. 
 
 We consider an anomalous exponent $\beta(x) = 0.525 + 0.45 * \arctan(x)/ \pi$, which continuously interpolates between $\lim_{x \to -\infty} \beta(x) = 0.3$ 
 and $\lim_{x \to +\infty} \beta(x) = 0.75$.
@@ -721,7 +786,8 @@ Here, we have given a derivation which identifies the unique solutions of variab
 Moreover, we have constructed a sequence of CTRW processes which converges to the solution of a variable-order FFPE.  We have used this approach to approximate a solution to a variable-order FFPE via Monte Carlo simulation.
 
 The fractional exponent $\beta$ has traditionally been used to define a global fractional diffusion coefficient, of dimension Length$^2$ / Time$^\beta$.  For spatially varying $\beta(x)$, such a global diffusion coefficient no longer exists.  
-Instead, a factor $T_0^{-\beta(x)}$ arises in the variable order FFPE, where $T_0$ corresponds to the applicable unit of time.  We have given a dimensional analysis which shows that the variable order FFPE is dimensionally consistent.  Finally, our simulations confirm that although the drift and diffusivity parameters seemingly depend on the chosen time scale $T_0$ and thus yield different governing FFPEs, the solutions of these different FFPEs are identical and hence that the theory is consistent. 
+Instead, a factor $T_0^{-\beta(x)}$ arises in the drift and diffusion 
+coefficients of the variable order FFPE, where $T_0$ corresponds to the applicable unit of time.  We have given a dimensional analysis which shows that the variable order FFPE is dimensionally consistent.  Finally, our simulations confirm that although the drift and diffusivity parameters seemingly depend on the chosen time scale $T_0$ and thus yield different governing FFPEs, the solutions of these different FFPEs are identical and hence that the theory is consistent. 
 
 Currently, there exist few numerical methods for the solution of FFPEs with memory kernels which vary in space, although such FFPEs may well be useful to the physics community, as discussed in the introduction.  The algorithm from \cite{Gill2016} may be extended to the spatially inhomogeneous setting, an idea which we will follow up on in future work. 
 
@@ -735,187 +801,7 @@ significantly improved the presentation of this article.
 
 \section*{References}
 
-\newcommand{\etalchar}[1]{$^{#1}$}
-\begin{thebibliography}{TNMT{\etalchar{+}}04}
-
-\bibitem[ADH13]{Angstmann2013}
-Christopher~N Angstmann, I~C Donnelly, and Bruce~I Henry.
-\newblock {Continuous Time Random Walks with Reactions Forcing and Trapping}.
-\newblock {\em Math. Model. Nat. Phenom.}, 8(2):17--27, apr 2013.
-
-\bibitem[App09]{Applebaum}
-D.~Applebaum.
-\newblock {\em {L{\'{e}}vy Processes and Stochastic Calculus}}, volume 116 of
-  {\em Cambridge Studies in Advanced Mathematics}.
-\newblock Cambridge University Press, 2nd edition, may 2009.
-
-\bibitem[Ber99]{Bertoin04}
-Jean Bertoin.
-\newblock {\em {Subordinators: examples and applications}}, volume 1717 of {\em
-  Lecture Notes in Mathematics}.
-\newblock Springer Berlin Heidelberg, Berlin, Heidelberg, 1999.
-
-\bibitem[BF05]{Banks2005}
-Daniel~S. Banks and C{\'{e}}cile Fradin.
-\newblock {Anomalous diffusion of proteins due to molecular crowding.}
-\newblock {\em Biophys. J.}, 89(5):2960--71, nov 2005.
-
-\bibitem[BG90]{BG1990}
-Jean~Philippe Bouchaud and Antoine Georges.
-\newblock {Anomalous diffusion in disordered media: Statistical mechanisms,
-  models and physical applications}, nov 1990.
-
-\bibitem[Bil68]{Billingsley1968}
-P.~Billingsley.
-\newblock {\em {Convergence of Probability Measures}}.
-\newblock Wiley Series in Probability and Statistics. John Wiley \& Sons Inc,
-  New York, second edition, jan 1968.
-
-\bibitem[BM01]{Baeumer2001}
-Boris Baeumer and Mark~M Meerschaert.
-\newblock {Stochastic solutions for fractional Cauchy problems}.
-\newblock {\em Fract. Calc. Appl. Anal.}, 4(4):481--500, 2001.
-
-\bibitem[BMK00]{BMK00}
-Eli Barkai, Ralf Metzler, and Joseph Klafter.
-\newblock {From continuous time random walks to the fractional Fokker-Planck
-  equation}.
-\newblock {\em Phys. Rev. E}, 61(1):132--138, jan 2000.
-
-\bibitem[BS16]{BaeumerStraka16}
-Boris Baeumer and Peter Straka.
-\newblock {Fokker–Planck and Kolmogorov backward equations for continuous
-  time random walk scaling limits}.
-\newblock {\em Proc. Am. Math. Soc.}, 145(1):399--412, jul 2016.
-
-\bibitem[CGS05]{Chechkin2005a}
-Aleksei~V Chechkin, R.~Gorenflo, and Igor~M Sokolov.
-\newblock {Fractional diffusion in inhomogeneous media}.
-\newblock {\em J. Phys. A. Math. Gen.}, 38(42):L679--L684, oct 2005.
-
-\bibitem[CLAT10]{Chen2010}
-Chang-Ming Chen, F.~Liu, V.~Anh, and I.~Turner.
-\newblock {Numerical Schemes with High Spatial Accuracy for a Variable-Order
-  Anomalous Subdiffusion Equation}.
-\newblock {\em SIAM J. Sci. Comput.}, 32(4):1740--1760, jan 2010.
-
-\bibitem[FF12]{Fedotov2012}
-Sergei Fedotov and Steven Falconer.
-\newblock {Subdiffusive master equation with space-dependent anomalous exponent
-  and structural instability}.
-\newblock {\em Phys. Rev. E}, 85(3):031132, mar 2012.
-
-\bibitem[HKRU11]{Hahn11}
-Marjorie~G Hahn, Kei Kobayashi, J.~Ryvkina, and Sabir Umarov.
-\newblock {On time-changed Gaussian processes and their associated
-  Fokker-Planck-Kolmogorov equations}.
-\newblock {\em Electron. Commun. Probab.}, 16:150--164, 2011.
-
-\bibitem[HLS10]{HLS10PRL}
-Bruce~I Henry, T.~A.~M. Langlands, and Peter Straka.
-\newblock {Fractional Fokker-Planck Equations for Subdiffusion with Space- and
-  Time-Dependent Forces}.
-\newblock {\em Phys. Rev. Lett.}, 105(17):170602, oct 2010.
-
-\bibitem[Kal02]{Kallenberg}
-O.~Kallenberg.
-\newblock {\em {Foundations of Modern Probability}}.
-\newblock Probability and its Applications (New York). Springer, New York, jan
-  2002.
-
-\bibitem[KB10]{Korabel2010}
-Nickolay Korabel and Eli Barkai.
-\newblock {Paradoxes of subdiffusive infiltration in disordered systems}.
-\newblock {\em Phys. Rev. Lett.}, 104(17):1--4, 2010.
-
-\bibitem[LHW08]{Langlands2008d}
-T.~A.~M. Langlands, Bruce~I Henry, and Susan~L Wearne.
-\newblock {Anomalous subdiffusion with multispecies linear reaction dynamics}.
-\newblock {\em Phys. Rev. E}, 77(2):021111, feb 2008.
-
-\bibitem[MK00]{Metzler2000}
-Ralf Metzler and Joseph Klafter.
-\newblock {The random walk's guide to anomalous diffusion: a fractional
-  dynamics approach}.
-\newblock {\em Phys. Rep.}, 339(1):1--77, dec 2000.
-
-\bibitem[RVD{\etalchar{+}}13]{Regner2013}
-Benjamin~M. Regner, Dejan Vu{\v{c}}ini{\'{c}}, Cristina Domnisoru, Thomas~M.
-  Bartol, Martin~W. Hetzer, Daniel~M. Tartakovsky, and Terrence~J. Sejnowski.
-\newblock {Anomalous diffusion of single particles in cytoplasm}.
-\newblock {\em Biophys. J.}, 104(8):1652--1660, 2013.
-
-\bibitem[SCC09]{Sun2009}
-HongGuang Sun, Wen Chen, and YangQuan Chen.
-\newblock {Variable-order fractional differential operators in anomalous
-  diffusion modeling}.
-\newblock {\em Phys. A Stat. Mech. its Appl.}, 388(21):4586--4592, nov 2009.
-
-\bibitem[SF15]{StrakaFedotov14}
-Peter Straka and Sergei Fedotov.
-\newblock {Transport equations for subdiffusion with nonlinear particle
-  interaction}.
-\newblock {\em J. Theor. Biol.}, 366:71--83, feb 2015.
-
-\bibitem[SH11]{StrakaHenry}
-Peter Straka and Bruce~I Henry.
-\newblock {Lagging and leading coupled continuous time random walks, renewal
-  times and their joint limits}.
-\newblock {\em Stoch. Process. their Appl.}, 121(2):324--336, feb 2011.
-
-\bibitem[SM75]{Scher1975}
-H.~Scher and E.W.~W Montroll.
-\newblock {Anomalous transit-time dispersion in amorphous solids}.
-\newblock {\em Phys. Rev. B}, 1975.
-
-\bibitem[SS11]{Stickler2011}
-B.~A. Stickler and E.~Schachinger.
-\newblock {Continuous time anomalous diffusion in a composite medium}.
-\newblock {\em Phys. Rev. E - Stat. Nonlinear, Soft Matter Phys.}, 84(2):1--9,
-  2011.
-
-\bibitem[Str17]{var-order-MC}
-Peter Straka.
-\newblock {Supporting Documentation}, 2017.
-
-\bibitem[SWDA06]{Santamaria2006a}
-Fidel Santamaria, Stefan Wils, Erik {De Schutter}, and George~J. Augustine.
-\newblock {Anomalous diffusion in Purkinje cell dendrites caused by spines.}
-\newblock {\em Neuron}, 52(4):635--48, nov 2006.
-
-\bibitem[TNMT{\etalchar{+}}04]{TMT04}
-Iva~Marija Toli{\'{c}}-N{\o}rrelykke, Emilia-Laura Munteanu, Genevieve Thon,
-  Lene Oddershede, and Kirstine Berg-S{\o}rensen.
-\newblock {Anomalous Diffusion in Living Yeast Cells}.
-\newblock {\em Phys. Rev. Lett.}, 93(7):078102, aug 2004.
-
-\bibitem[Tsu92]{Tsuchiya1992}
-Masaaki Tsuchiya.
-\newblock {L{\'{e}}vy measure with generalized polar decomposition and the
-  associated SDE with jumps}.
-\newblock {\em Stochastics}, 1129(March 2013):37--41, 1992.
-
-\bibitem[WGR{\etalchar{+}}04]{Wong04}
-I.~Y. Wong, M.~L. Gardel, D.~R. Reichman, Eric~R. Weeks, M.~T. Valentine, A.~R.
-  Bausch, and D.~A. Weitz.
-\newblock {Anomalous Diffusion Probes Microstructure Dynamics of Entangled
-  F-Actin Networks}.
-\newblock {\em Phys. Rev. Lett.}, 92(17):30--33, 2004.
-
-\bibitem[Whi01]{Whitt2010}
-Ward Whitt.
-\newblock {\em {Stochastic-Process Limits: An Introduction to
-  Stochastic-Process Limits and their Application to Queues}}.
-\newblock Springer, New York, 1st edition, nov 2001.
-
-\bibitem[WM08]{Weron2008}
-A.~Weron and Marcin Magdziarz.
-\newblock {Modeling of subdiffusion in space-time-dependent force fields beyond
-  the fractional Fokker-Planck equation}.
-\newblock {\em Phys. Rev. E}, 77(3):1--6, mar 2008.
-
-\end{thebibliography}
-
+\bibliography{varyExp}
 
 \appendix
 
@@ -954,6 +840,7 @@ solution $(Y_u, Z_u)$.
 
 
 \subsection{Proof of Theorem \ref{theorem1}}
+\label{sec:app-pf-th}
 
 Assume that conditions \eqref{eq:cond1}--\eqref{eq:cond4} all hold. 
 Split the domain of integration in \eqref{eq:jump-process-generator} into a local part $L = \{(y,w): |y| \le \varepsilon, \, 0 < w \le \varepsilon\}$ and its complement $L^\complement$. On $L$, we do a Taylor expansion and calculate
