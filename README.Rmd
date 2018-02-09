@@ -23,7 +23,14 @@ Given drift and diffusivity functions $a(x)$ and $b(x)$, jumps are simulated
 via 
 
 ```{r}
-drawJ <- function(x) rnorm(n = 1, mean = b(x)/c, sd = sqrt(a(x)/c))
+drawJ <-
+    function(x) {
+    rnorm(
+    n = 1,
+    mean = b(x) / (timescale ^ beta(x) * c),
+    sd = sqrt(a(x) / (timescale ^ beta(x) * c))
+    )
+    }
 ```
 
 Given a vector of times `endTimes` (e.g. `r 2^(-3:3)`), this function returns the location 
@@ -58,12 +65,15 @@ propagateCTRW <- function(startLocation, endTimes){
 library(parallel)
 library(plyr)
 library(magrittr)
-beta <- function(x) 0.525 + 0.45 * atan(x)/pi
+beta <- function(x) 0.525 + 0.45 * atan(x/0.2)/pi
+a <- function(x) 2
+b <- function(x) dnorm(x, 0, 0.2)
 c <- 200
-tEnd <- 2^(-3:3)
+tEnd <- 2^(c(-3, 0, 3, 6))
 # initialize the arrays storing the output of propagateCTRW
 ensemble1 <- array(dim=c(0,length(tEnd),2))
 ensemble2 <- array(dim=c(0,length(tEnd),2))
+num_trajectories <- 10000
 ```
 
 ## At scale $T_0 = 1$
@@ -74,10 +84,7 @@ to `ensemble1`. Run it multiple times if more trajectories are needed.
 ```{r, cache=TRUE}
 timescale <- 1
 startX <- 0
-a <- function(x) timescale^(-beta(x))
-b <- function(x) timescale^(-beta(x))
 
-num_trajectories <- 15000
 more <- mclapply(X = rep(startX, num_trajectories), 
          FUN = function(x) propagateCTRW(startLocation = startX, 
                                          endTimes = tEnd * timescale), 
@@ -97,10 +104,7 @@ Identical to the above block. Run multiple times if more trajectories needed.
 ```{r, cache=TRUE}
 timescale <- 10
 startX <- 0
-a <- function(x) timescale^(-beta(x))
-b <- function(x) timescale^(-beta(x))
 
-num_trajectories <- 15000
 more <- mclapply(X = rep(startX, num_trajectories), 
          FUN = function(x) propagateCTRW(startLocation = startX, 
                                          endTimes = tEnd * timescale), 
@@ -108,7 +112,9 @@ more <- mclapply(X = rep(startX, num_trajectories),
 more <- laply(.data = more, .fun = function(slice) slice)
 
 ensemble2 <- abind::abind(ensemble2, more, along=1)
-if (mean(ensemble2[,1,2]) < 30) print("Careful: not enough steps. Increase c.")
+if (mean(ensemble2[, 1, 2]) < 30)
+    print("Careful: not enough steps. Increase c."
+    )
 ```
 
 
@@ -116,21 +122,45 @@ if (mean(ensemble2[,1,2]) < 30) print("Careful: not enough steps. Increase c.")
 
 `ensemble1` and `ensemble2` contain the positions of the walkers at 
 the times `r tEnd` and `r 10 * tEnd`.  Apply the kernel density estimator 
-`density()` from the `stats` package and plot the densities: 
+`density()` from the `stats` package and plot 
 
-```{r plot-together, echo=FALSE, cache=TRUE}
-par(mfrow=c(1,2))
-plot(density(ensemble1[,1,1]), xlim = c(-2,6), ylim = c(0,0.85), type = 'n', 
-     main = "Timescale = 1", xlab='x')
-legend("topright", paste(tEnd), col=1:length(tEnd), lty=1, title="Density at t = ")
-for (k in 1:length(tEnd)){
-    lines(density(ensemble1[,k,1]), col = k)
+1. the density of `ensemble1` and 
+2. the difference `ensemble2 - ensemble1`:
+
+
+
+```{r plot-densities-ggplot2}
+library(tidyverse)
+
+from = -6
+to = 8
+n = 512
+
+ensemble_to_matrix <- function(ensemble) {
+    d <- density(ensemble, from = from, to = to, n = n)
+    d$y
 }
-plot(density(ensemble2[,1,1]), xlim = c(-2,6), ylim = c(0,0.85), type = 'n',
-     main = "Timescale = 10", xlab='x')
-legend("topright", paste(tEnd * 10), col=1:length(tEnd), lty=1, title="Density at t = ")
-for (k in 1:length(tEnd)){
-    lines(density(ensemble2[,k,1]), col = k)
-}
+y1 <- apply(ensemble1[ , ,1], 2, ensemble_to_matrix) %>% as.data.frame()
+names(y1) <- c("t = 1/8", "t = 1", "t = 8", "t = 64")
+y2 <- apply(ensemble2[ , ,1], 2, ensemble_to_matrix) %>% as.data.frame()
+names(y2) <- names(y1)
+x <- density(ensemble1[,1,1], from = from, to = to, n = n)$x
+density_df <- cbind(x, y1)
+density_df$panel <- "density"
+diff_df <- cbind(x, y2-y1)
+diff_df$panel <- "difference"
+
+p <- rbind(density_df, diff_df) %>%
+    reshape2::melt(c("x", "panel")) %>%
+    ggplot(aes(x = x, y = value, colour = variable)) + 
+    geom_line()  + ylab("")
+p + facet_grid(panel ~ ., scales = "free")
+```
+
+```{r coefficients-plot}
+tibble(x = x, b = b(x), a = a(x), beta = beta(x)) %>%
+    reshape2::melt("x") %>%
+    ggplot(aes(x = x, y = value, colour = variable)) + geom_line()
+ggsave("beta_b.pdf", width = 6, height = 3)
 ```
 

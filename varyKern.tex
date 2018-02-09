@@ -5,7 +5,7 @@
 \usepackage{graphicx}
 \usepackage{url}
 \usepackage{natbib}
-\bibliographystyle{abbrvnat}
+\bibliographystyle{unsrtnat}
 \usepackage{hyperref}
 
 \numberwithin{equation}{section}
@@ -40,7 +40,7 @@ Continuous Time Random Walks}
 \author[UNSW]{Peter Straka}
 \ead{p.straka@unsw.edu.au}
 \address[UNSW]{School of Mathematics \& Statistics, UNSW Sydney, Sydney NSW 2052, Australia}
-
+ 
 
 \begin{abstract}
 % purpose, results, conclusion
@@ -57,8 +57,9 @@ established for FFPEs of the``variable order'' type with non-constant
 $\beta(x)$. 
 
 In this article, variable order FFPEs (VOFFPE) are derived from scaling 
-limits of CTRWs.  The key mathematical tool is the 1-1 correspondence 
-of a CTRW scaling limit to a bivariate Langevin process, which tracks the
+limits of CTRWs.  The key mathematical tool is the Semi-Markov property,
+which entails a 1-1 correspondence 
+of a CTRW scaling limit with a bivariate Langevin process, which tracks the
 cumulative sum of jumps in one component and the cumulative sum of waiting 
 times in the other. The spatially varying anomalous exponent is
 modelled by spatially varying $\beta(x)$-stable L\'evy noise in the 
@@ -66,9 +67,10 @@ waiting time component.
 %An existing result from the mathematics literature is used to derive a 
 %unique VOFFPE from the CTRW limit.  
 The VOFFPE displays a unique temporal 
-scaling behaviour: at a time scale $T_0$, the factor $T_0^{-\beta(x)}$ 
-enters in both the drift and diffusivity coefficients of the Fokker-Planck 
-operator.  
+scaling behaviour: 
+the fractional diffusion and fractional friction constants become dependent 
+on the global time scale $T_0$ as well as the local fractional exponent 
+$\beta(y)$.
 
 A consequence of the mathematical derivation of a VOFFPE from CTRW limits 
 in this article is that a solution of a VOFFPE can be approximated via 
@@ -168,33 +170,42 @@ We note the following issues in the applicability of these two prototypes:
   and allow extensions for chemical reactions or other particle interaction.
 \end{itemize}
 
-In this article, we resolve the above issues. We provide a general 
-approach
-which represents CTRW scaling limits as Langevin processes in space-time
-$\spctim$.  In the space-time setting, spatially varying parameters for the
-waiting time distribution are mathematically tractable and dimensionally
-coherent.  The general form of the FFPE (Fractional Fokker-Planck Equation)
-governing a CTRW limit becomes
-\begin{align}
-\frac{\del P(y,t)}{\del t} = \mathcal L^*(y,t) \left[ \frac{\partial}{\partial t}
-\int_0^t P(y,t-s) V(y,s)\,ds \right] + h(y,t),
-\end{align}
-where $\mathcal L^*(y,t)$ is a Fokker-Planck operator with space- and
-time-dependent drift and diffusivity, and
-where the $y$-dependent memory kernel $V(y,s)$ admits an interesting 
-interpretation
-based on renewal theory.  In particular, if the dynamics are locally fractional
-with parameter $\beta(y)$, then the governing equation changes dependent on the 
-time scale $T_0$, and the FFPE is
-\begin{align} \label{eq:VOFFPE}
-\frac{\del P(y,t)}{\del t}
-= \mathcal L^*(y,t) \left[ T_0^{-\beta(y)} {_0 D}_t^{1-\beta(y)} P(y,t) \right] + h(y,t),
-\end{align}
-where ${_0 D}_t^{1-\beta(y)}$ is the order $1-\beta(y)$ Riemann-Liouville
-fractional derivative.  This equation extends \eqref{eq:wrong2} to
-space- and time-dependent drift and diffusivity and allows for a switch
-between time scales.
+In this article, we resolve the above issues. We work in a general 
+framework which rests on only one main assumption: The 
+\emph{Semi-Markov property}, which states that the next waiting time of a 
+CTRW is independent of the current time, and depends only on the current 
+position in space \cite{Germano2009}\footnote{But the next jump may depend
+on both location and current time.}.
+Equivalently, a Semi-Markov process is a process $X_t$ for which the 
+bivariate process $(X_t, V_t)$ is Markovian, where $V_t$ tracks the time 
+since the last movement of $X_t$ \cite{Meerschaert2014}. 
+There is a 1-1 correspondence between Semi-Markov processes and 
+\emph{Markov additive processes} (MAP) \cite{cinlar1974markov}.
+These are Markov processes in space-time, with the property that
+the future trajectory is independent of the past, given the present 
+\emph{space} component \emph{only} (as opposed to given the present value 
+of \emph{both} components). 
+We fully exploit this 1-1 correspondence and 
+represent CTRWs and their scaling limits as Langevin processes in 
+space-time $\spctim$.
+In the Langevin setting, spatially varying fractional parameters 
+for the waiting time distribution can be introduced relatively easily, 
+which is a useful tool in the derivation of the Variable Order Fractional 
+Fokker-Planck Equation (VOFFPE).
 
+A recent result in \cite{BaeumerStraka16} then provides the
+generalized FFPE (Fractional Fokker-Planck Equation) \eqref{eq:FFPE}
+which governs a CTRW scaling limit $X_t$ in the sense that its unique 
+solution $P(y,t)$ is the probability distribution of $X_t$. 
+The generalized FFPE \eqref{eq:FFPE} contains a 
+space-dependent memory kernel $V(y,s)$ which admits an interesting 
+interpretation
+based on renewal theory.  Moreover, if the dynamics are locally fractional
+with parameter $\beta(y)$, a variable order FFPE (VOFFPE) 
+\eqref{eq:FFPE-with-scale} results from the generalized FFPE
+\eqref{eq:FFPE}, which contains fractional diffusion and friction ``constants''
+that depend on both the time scale $T_0$ and the local fractional parameter 
+$\beta(y)$.
 
 Section 2 describes the underlying dynamics in space-time, where the first
 component tracks the location of a particle and the second component the
@@ -202,7 +213,7 @@ physical time that has passed.  Scaling limits are identified as bivariate
 Langevin processes which uniquely correspond to CTRW limits.
 In Section 3 we utilize a result from the mathematics literature that links CTRW 
 limits with fractional Fokker-Planck equations.
-In Section 4 we show that the variable-order FFPE \eqref{eq:VOFFPE} is consistent, by  calculating matching solutions at different time scales via a Monte-Carlo simulation of CTRW trajectories.
+In Section 4 we show that the variable-order FFPE \eqref{eq:FFPE-with-scale} is consistent, by  calculating matching solutions at different time scales via a Monte-Carlo simulation of CTRW trajectories.
 
 
 \section{The space-time setting}
@@ -223,7 +234,7 @@ Moreover, write $t_0$ for the starting time and $x_0$ for the starting
 location. Then the pair sequence
 $(t_0, x_0), (t_1, x_1), (t_2, x_2), \ldots$
 must define a Markov chain in space-time $\spctim$,
-by the CTRW assumption that the $k+1$-th waiting time $t_{k+1} - t_k$
+by the Semi-Markov assumption that the $k+1$-th waiting time $t_{k+1} - t_k$
 and the $k+1$-th jump $x_{k+1} - x_k$ are both independent of the past
 $(t_0, x_0), \ldots, (t_{k-1}, x_{k-1})$ given the current $(t_k, x_k)$.
 
@@ -246,13 +257,18 @@ $\tau$ and jumps $\pm \chi$ with equal probability $1/2$.  The tail parameter
 $\beta$ varies as a function $\beta(x)$ in space. 
 
 
-We will view $c > 0$ as a ``master'' scaling parameter, and we let
-$\tau = 1/c$ for the temporal scale and $\chi = c^{-1/2}$ for the
-spatial scale.
+We will view $c > 0$ as a ``master'' scaling parameter, 
+in the sense that as $c \uparrow \infty$, both $\chi \downarrow 0$ and 
+$\tau \downarrow 0$. 
 Thus for every $c$ we have defined a Markov chain on $\spctim$, which
 in turn defines a CTRW at scale $\chi$ in space and $\tau$ in time
 via \eqref{eq:CTRW-trajectory}.
-We are interested in the limiting CTRW process $c \to \infty$.
+We are interested in the limiting CTRW process as $c \to \infty$ (if there 
+is one).
+Theorem \ref{theorem1} specifies the exact conditions on the rate at 
+which $\chi \downarrow 0$ and $\tau \downarrow 0$, so that a limiting 
+CTRW process exists. 
+See Subsection \ref{sec:scaling} for more details. 
 
 
 \subsection{The limiting space-time Langevin Process}
@@ -363,7 +379,7 @@ To this end, we make
   \label{eq:varying-tempered-stable-levy-measure}
   \nu(w | x) = \frac{\beta(x)}{\Gamma(1-\beta(x))}\, 
   w^{-1-\beta(x)}\,e^{-\theta(x) w}\,dw, 
-  \quad w > 0, \quad 0 < \beta < 1, \quad \theta \ge 0, 
+  \quad w > 0, \quad 0 < \beta(x) < 1, \quad \theta \ge 0, 
 \end{align}
 where we assume that $\beta(x) \in (0,1)$ and $\theta(x) \ge 0$ are  
 functions of $x$.
@@ -383,12 +399,13 @@ Before we discuss the stochastic process scaling limit mechanism, we
 define the class of scaling limits $(Y_u, Z_u)$ which is suitable for our CTRW setting. This class consists of all of Langevin processes in 
 $\spctim$ of the form
 \begin{align} \label{eq:SDEY}
-dY_u &= b(Y_{u}, Z_{u})\,du + a(Y_{u}, Z_{u})\, dW_u \\
+dY_u &= \frac{b(Y_{u}, Z_{u})}{A_0}\,du + \sqrt{\frac{a(Y_{u}, Z_{u})}{A_0}}\, dW_u \\
 \label{eq:SDEZ}
 dZ_u &= d(Y_{u})\,du + \int_{w > 0} F(w | Y_{u}) \, N(dw, du).
 \end{align}
 Here $Y_u$ denotes location in space; $Z_u$ the corresponding (physical) time;
 $u$ denotes auxiliary time, resulting from the rescaled number of CTRW steps;
+$A_0$ is a unit of auxiliary time (s.\ below);
 $W_u$ is an independent Brownian motion; 
 $b$ and $a$ are space- and time-dependent
 spatial drift resp.\ diffusivity functions; $d \ge 0$ is a temporal drift coefficient function;
@@ -396,10 +413,17 @@ and $F$ is as in \eqref{eq:varying-general-F}.
 
 The distinction between physical time $Z_u$ and auxiliary time $u$ is helpful
 as it allows to maintain a coherent physical interpretation of the FFPE derived
-in Section \ref{sec:FFPE}.  The coefficient functions $b$ and $a$ measure
+in Section \ref{sec:FFPE}.  The coefficient functions $b(y,t)/A_0$ and $a(y,t)/A_0$ measure
 length (resp.\ length squared) \emph{per unit auxiliary time}.  Similarly,
-$d$ measures physical time per unit auxiliary time, and $F$ is physical
-time-valued.
+$d$ measures physical time per unit auxiliary time, and $F$ is 
+dimensionless, while $N(dw,du)$ counts the point process points
+per auxiliary time, hence its two-dimensional integral over both physical 
+time $w$ and auxiliary time $u$ is physical time valued.
+Note that we explicitly write the auxiliary time unit $A_0$ in 
+\eqref{eq:SDEY} but not in \eqref{eq:SDEZ}, because it will cancel in the 
+Fokker--Planck operator derived in \eqref{eq:FFPE-with-scale}.
+We stress that $b(y,t)$ has unit length, and $a(y,t)$ has unit 
+length$^2$.
 Equation \eqref{eq:SDEY} has already appeared in \cite{Weron2008}, where
 it was assumed that $Z_u$ is a homogeneous $\beta$-stable subordinator (L\'evy
 flight).
@@ -423,25 +447,30 @@ See Section~\ref{subsec:Lip-gro} for details.
 \subsection{Limit theorem for the Langevin equation}
 \label{subsec:convergence}
 \paragraph{Infinitesimal generator}
-The limiting Langevin stochastic processes $(Y_u,Z_u)$ are (Feller-)\footnote{Feller processes assume that at any time $t$, their distribution depends continuously on the starting point, here $(x,s)$.} Markov
-processes, and as such their distributions
-are uniquely determined by their infinitesimal generator
+The limiting Langevin stochastic processes $(Y_u,Z_u)$ are Feller-Markov
+processes, which means that at any time $u$, their distribution depends 
+continuously on their starting point $(x,s)$ (see the textbooks 
+\cite{Kallenberg, Applebaum} for more details).
+The distributions of their sample trajectories
+are uniquely determined by their infinitesimal generator $\mathcal A$, 
+which is the operator defined by 
 \begin{align}
 \mathcal A f(x,s) = \lim_{u \downarrow 0}
 \left \langle f(Y_u, Z_u)\right \rangle_{(x,s)} / u, 
-\quad f \in C_0(\spctim)
+\quad f \in \text{dom}(\mathcal A)
 \end{align}
-where $f$ is a generic function\footnote{From the Banach space
-$C_0(\spctim)$ of continuous  functions on $\spctim$ which vanish at $\infty$},
-and $\langle \, \rangle_{(x,s)}$ denotes the ensemble average over all
-trajectories starting at $(x,s)$ \cite{Applebaum}. The domain of $\mathcal A$ contains the twice
+where $\text{dom}(\mathcal A)$ is the space of all real-valued, 
+continuous functions vanishing at $\infty$ for 
+which the above limit exists.
+The angle brackets, $\langle \, \rangle_{(x,s)}$ denote the ensemble average over all
+trajectories starting at $(x,s)$. The domain of $\mathcal A$ contains the twice
 continuously differentiable functions, and $\mathcal A$ has the following
 form \cite[Section 6.7.1]{Applebaum}:
 \begin{align} \label{eq:inf-gen}
 \begin{split}
 \mathcal A f(x,s)
-&= b(x,s)\frac{\del }{\del x} f(x,s)
-+\frac{1}{2} a(x,s) \frac{\del^2}{\del x^2} f(x,s)\\
+&= \frac{b(x,s)}{A_0} \frac{\del }{\del x} f(x,s)
++\frac{1}{2} \frac{a(x,s)}{A_0} \frac{\del^2}{\del x^2} f(x,s)\\
 &+ d(x) \frac{\partial}{\partial s} f(x,s)
 + \int_0^\infty \left[f(x,s+w)-f(x,s)
 \right] \nu(w|x)\, dw
@@ -465,19 +494,36 @@ on the current time; hence $d(x)$ and $\nu(w|x)$ only depend on $x$ and not on $
 \end{itemize}
 
 \paragraph{Conditions for stochastic process convergence}
-First, define the following continuous time Markov jump process $(Y^{(c)}_u, Z^{(c)}_u)$ on 
-$\spctim$: at location $(x,s)$, wait an amount of time which is exponentially distributed with mean $1/c$. (This time is in ``auxiliary time'', and is not a CTRW waiting time!) Then jump to the location $(x+y, s+w)$, where the distribution of $(y,w)$ is determined by \eqref{eq:STJK}, and repeat. The resulting process has the infinitesimal generator
+First, we embed the Markov chain with kernel \eqref{eq:STJK} from 
+Section 2.1 into continuous time. Define a continuous time Markov 
+chain $(Y^{(c)}_u, Z^{(c)}_u)$ on 
+$\spctim$ as follows: at starting location $(x,s)$, wait an amount of time which is exponentially distributed with mean $1/c$. (This time is in ``auxiliary time'' $u$, and is not a CTRW waiting time!) Then jump to the location $(x+y, s+w)$, where the distribution of $(y,w)$ is determined by \eqref{eq:STJK}, and repeat. The resulting process has the infinitesimal generator
 (see e.g.\ \cite[Proposition 17.2]{Kallenberg}) 
 \begin{align} \label{eq:jump-process-generator}
 \mathcal A^{(c)} f(x,s) = c \iint [f(x+y, s+w) - f(x,s)] K^{(c)}(y,w | x,s)\,dy\,dw.
 \end{align}
-A key result for Feller processes is that stochastic process convergence is equivalent to the convergence of infinitesimal generators \cite[Theorem 17.25]{Kallenberg}:\footnote{The convergence on the left side of \eqref{eq:generator-condition} is in the sense of stochastic processes with respect to the Skorokhod $J_1$ topology, see e.g.\ \cite{Whitt2010}. The right side must hold for all $f$ from the domain of $\mathcal A$, which is a dense subset of the function space $C_0(\spctim)$ of continuous real-valued functions defined on $\spctim$ which vanish at $\infty$).}
+A key result for Feller processes is that stochastic process convergence is equivalent to the convergence of infinitesimal generators \cite[Theorem 17.25]{Kallenberg}:
 \begin{align} \label{eq:generator-condition}
 \lim_{c \to \infty}(Y^{(c)}_u, Z^{(c)}_u) = (Y_u, Z_u)
 \text{ if and only if }
 \lim_{c \to \infty} \mathcal A^{(c)}f(x,s) = \mathcal A f(x,s), 
-\quad f \in {\rm Dom}(\mathcal A)
+\quad f \in {\rm Dom}(\mathcal A).
 \end{align}
+The convergence on the left side of \eqref{eq:generator-condition} is in the sense of stochastic processes with respect to the Skorokhod $J_1$ topology, see e.g.\ \cite{Whitt2010}. This mode of convergence implies \emph{finite 
+dimensional convergence}, i.e.\ the requirement that for any collection
+of times $u_1 < \ldots < u_n$, the convergence in distribution of the 
+random vectors
+\begin{align}
+\left((Y^{(c)}_{u_1}, Z^{(c)}_{u_1}), \ldots, (Y^{(c)}_{u_n}, Z^{(c)}_{u_n}) \right) 
+\to 
+\left((Y_{u_1}, Z_{u_1}), \ldots, (Y_{u_n}, Z_{u_n}) \right)
+\end{align}
+holds. 
+The convergence on the right of \eqref{eq:generator-condition} 
+need only hold for the twice continuously 
+differentiable functions $f$ which vanish at $\infty$, since these are a 
+dense subspace of $\text{dom}(\mathcal A)$. 
+
 The two theorems below connect \eqref{eq:generator-condition} to the convergence of CTRWs: 
 
 \begin{theorem} \label{theorem1}
@@ -501,7 +547,7 @@ where $g(z,w)$ is any bounded continuous function which vanishes in a neighbourh
 \end{theorem}
 A proof of Theorem~\ref{theorem1} is given in \ref{sec:app-pf-th}. 
 
-\begin{theorem}
+\begin{theorem} \label{th:continuous-mapping}
 The left side of \eqref{eq:generator-condition} implies that 
 \begin{align} \label{eq:CTRW-limit}
 \lim_{c \to \infty} X^{(c)}_t = X_t,
@@ -512,11 +558,8 @@ X_t = Y_{E(t)} \text{ where } E(t) = \inf\{u: Z_u > t\}.
 \end{align}
 The limit in \eqref{eq:CTRW-limit} is in the sense of stochastic processes with respect to the Skorokhod $J_1$ topology \cite{Whitt2010}. 
 \end{theorem}
-\begin{proof}
-The path mapping from $u \mapsto (Y^{(c)}_u, Z^{(c)}_u)$ to $t \mapsto X^{(c)}_t$
-is continuous \cite{StrakaHenry}, and hence the theorem follows from an application of the continuous mapping theorem \cite{Billingsley1968, StrakaHenry}. 
-\end{proof}
 
+A proof of Theorem \ref{th:continuous-mapping} is given in \ref{sec:app-pf-th2}.
 Putting together the two theorems and result \eqref{eq:generator-condition}, 
 we see that conditions \eqref{eq:cond1}--\eqref{eq:cond4} are sufficient for the 
 convergence \eqref{eq:CTRW-limit}.
@@ -559,6 +602,63 @@ Finally, using
 More details are in \ref{subsec:calc-for-example}.
 \end{example}
 
+\subsection{Remarks on spatio-temporal scaling parameters} \label{sec:scaling}
+The left sides of equations \eqref{eq:cond1}--\eqref{eq:cond4} 
+correspond to, respectively,  
+the first moment of the truncated jump distribution, 
+the second moment of the truncated jump distribution, 
+the first moment of the truncated waiting time distribution 
+and the ``non-local'' parts of both jumps and waiting times. 
+For finite variance jumps as in the examples \eqref{eq:STJK-example}
+and \eqref{eq:example-kernel}, 
+the scaling $\chi^2 \sim 1/c$ is necessary to give a meaningful limit 
+in equations \eqref{eq:cond1}--\eqref{eq:cond2}. 
+For infinite variance jumps, where the tails of the jump probability 
+density fall off as $x^{-\alpha-1}$ with $\alpha \in (0,2)$, 
+the scaling $\chi^\alpha \sim 1/c$ is meaningful, see e.g.\ 
+\cite[Section 3.8]{MeerschaertSikorskii}. 
+This article only considers finite variance jumps; 
+in order to apply to infinite variance jumps, the right side of \eqref{eq:cond4} 
+needs to be replaced by 
+$\iint g(z,w) K(z,w|x)\,dz\,dw$,
+where for each $x$, $(z,w) \mapsto K(z,w|x)$ is a L\'evy density in 
+$\spctim$ (see e.g. Equation (3.2) in \cite{BMMST}).
+
+Similarly, if the waiting time distribution $\psi^{(c)}(w|x)$ in 
+\eqref{eq:example-kernel} had a finite mean, a scaling 
+$\tau \sim 1/c$ would yield a positive value for $d(x)$ in 
+\eqref{eq:cond3} and a vanishing L\'evy measure in \eqref{eq:cond4}.
+If the tails of $\psi^{(c)}(w|x)$ fall off as $w^{-1-\beta}$
+(not depending on $x$), where 
+$\beta \in (0,1)$, then the temporal scale $\tau$ needs to satisfy the 
+scaling $\tau^\beta \sim 1/c$ to yield a meaningful limit in both 
+\eqref{eq:cond3} and \eqref{eq:cond4} \cite[Section 3.7]{MeerschaertSikorskii}. 
+
+To satisfy the requirement \eqref{eq:cond4}, where $\nu(w|x)$ has a variable
+exponent $\beta(x)$ as in \eqref{eq:varying-tempered-stable-levy-measure},
+can be tricky: for example, if the waiting times are defined as in 
+\eqref{eq:STJK-example}, then \emph{it is not possible} to choose a scaling
+$\tau^\beta \sim 1/c$ so that \eqref{eq:cond4} is satisfied. 
+The reader may check easily that for any choice of constant 
+$\beta \in (0,1)$, 
+the left side of \eqref{eq:cond4} will diverge or vanish, depending 
+on whether $\beta(x)$ in $\nu(w|x)$ is smaller or larger than $\beta$.
+
+However, if the waiting times have probability densities as defined via 
+\eqref{eq:def-psi}, then \eqref{eq:cond4} is satisfied. 
+A closer look reveals that $\psi^{(c)}(w|x) = 0$ for $w$ smaller than 
+a number $C(x,c)$ (defined in \eqref{eq:psi-c}), and 
+\begin{align}
+\psi^{(c)}(w|x) 
+= \frac{\beta(x)}{\Gamma(1-\beta(x))} 
+\left(w / c^\frac{-1}{1+\beta(x)} \right)^{-1-\beta(x)}
+\end{align}
+for $w > C(x,c)$. 
+This may be interpreted as to say that the temporal scale is spatially 
+dependent: $\tau(x) = c^{-1/(1+\beta(x))}$.
+This space-dependent scaling manifests itself in a space-dependent 
+adjustment of the diffusivity and drift in the variable-order FFPE
+\eqref{eq:FFPE-with-scale}.
 
 
 \section{Fokker-Planck Equations with Memory}
@@ -576,8 +676,8 @@ is
 \begin{align}
 \label{eq:FPop}
 \mathcal A^* g(y,t)
-&= -\frac{\partial }{\partial y}[b(y,t) g(y,t)]
-+\frac{1}{2}\frac{\partial^2 }{\partial y^2}[a(y,t) g(y,t)]
+&= -\frac{\partial }{\partial y}\left[\frac{b(y,t)}{A_0} g(y,t)\right]
++\frac{1}{2}\frac{\partial^2 }{\partial y^2}\left[\frac{a(y,t)}{A_0} g(y,t)\right]
 \\
 \label{eq:Dop}
 &-\frac{\partial }{\partial t}[d(y) g(y,t)]
@@ -697,21 +797,45 @@ and recall that $V(y,t)$ measures unit auxiliary time per unit physical
 time:
 $$V(y,t) = \frac{(t/T_0)^{\beta(y)-1}}{\Gamma(\beta(y))}\, \frac{A_0}{T_0}
 = \frac{A_0}{T_0^{\beta(y)}} \, \frac{t^{\beta(y) - 1}}{\Gamma(\beta(y))}$$
-and
+and hence convolution with $V(y,t)$ becomes the Riemann-Liouville
+fractional derivative of spatially varying order $1-\beta(y)$, 
+\begin{align}
+  \frac{\partial}{\partial t} \int_0^t P(y,t-s) V(y,s)\,ds
+  = {_0D}_t^{1-\beta(y)} P(y,t) \, \frac{A_0}{T_0^{\beta(y)}}
+\end{align}
+(of unit $A_0 / T_0$).
+The Fokker-Planck operator is
 \begin{align}
 \mathcal L^* g(y,t)
-&= -\frac{L_0}{A_0}\,\frac{\partial }{\partial y}[b(y,t) g(y,t)]
-+\frac{L_0^2}{2A_0}\,\frac{\partial^2 }{\partial y^2}[a(y,t) g(y,t)].
+&= -\frac{1}{A_0}\,\frac{\partial }{\partial y}[b(y,t) g(y,t)]
++\frac{1}{2A_0}\,\frac{\partial^2 }{\partial y^2}[a(y,t) g(y,t)],
 \end{align}
 The FFPE \eqref{eq:FFPE} then reads
 \begin{align} \label{eq:FFPE-with-scale}
-\frac{\del P(y,t)}{\del t}
-= A_0 \mathcal L^* \left[ T_0^{-\beta(y)} {_0 D}_t^{1-\beta(y)} P(y,t) \right] + h(y,t),
+\frac{\partial P(y,t)}{\partial t}
+= \frac{\partial^2}{\partial y^2} \left[\frac{a(y,t)}{T_0^{\beta(y)}}
+  \, {_0 D}_t^{1-\beta(y)} P(y,t)\right]
+  - \frac{\partial}{\partial y} \left[\frac{b(y,t)}{T_0^{\beta(y)}}
+  \, {_0 D}_t^{1-\beta(y)} P(y,t)\right]
+  + h(y,t).
 \end{align}
-where $_0 D_t^{1-\beta(y)}$ is the Riemann-Liouville
-fractional derivative of spatially varying order $1-\beta(y)$.
+If the fractional exponent and the diffusivity are constant, i.e.\ 
+$\beta(y) \equiv \beta \in (0,1)$ and $a(y,t) \equiv a$,
+we retrieve the well-known FFPE (see e.g.\ \cite[Eq.(3)]{HLS10PRL})
+with fractional diffusion constant $\kappa_\beta = a / T_0^{\beta}$;
+note that in \cite{HLS10PRL}, the space- and time-dependent fractional 
+drift $b(y,t) / T_0^\beta$ coefficient is expressed as a space- and 
+time-dependent force $F(y,t)$, divided by a fractional friction parameter 
+$\eta_\beta$.)
+We remind the reader that in our Langevin framework, $a(y,t)$ and 
+$b(y,t)$ need not be constant, but can be any bounded differentiable 
+functions with bounded derivative. 
 
-As seen in \eqref{eq:FFPE-with-scale}, the auxiliary time scale parameter $A_0$ cancels, and we may hence assume $A_0 = 1$ without loss of generality. The interpretation is that the
+As seen in \eqref{eq:FFPE-with-scale}, the auxiliary time scale parameter 
+$A_0$ cancels, and the Fokker-Planck equation \eqref{eq:FFPE-with-scale}
+is independent of $A_0$. 
+We may hence assume $A_0 = 1$ without loss of generality. 
+The interpretation is that the
 Fokker-Planck dynamics are independent of the ``speed'' of the Langevin process
 $(Y_u, Z_u)$.  This is to be expected; to see why, first observe that
 multiplying $\mathcal A^*$ by a constant $C > 0$ uniquely corresponds to the
@@ -738,8 +862,8 @@ If the fractional parameter $\beta(y)$ varies in space, then the mean squared di
 there is no globally valid diffusion constant of dimensionality $L_0^2 / T_0^\beta$.  
 Equation
 \eqref{eq:FFPE-with-scale} reflects this spatially inhomogeneous behaviour
-via the $T_0^{-\beta(y)}$ term, which is effectively multiplied onto the
-coefficient functions $a(y,t)$ and $b(y,t)$.  
+via the inhomogeneous way, in which a change in the time scale parameter
+$T_0$ changes the Fokker-Planck dynamics.
 In Section~\ref{sec:examples}
 we confirm that equation \eqref{eq:FFPE-with-scale} is consistent with 
 different temporal scales $T_0$. 
@@ -761,16 +885,51 @@ times in the left dominate the waiting times in the right, as $t \to
 particles on the right are moving freely, and hence spread out further 
 towards $+\infty$, hence the mean $\langle x \rangle$ is ever increasing. 
 
-We consider an anomalous exponent $\beta(x) = 0.525 + 0.45 * \arctan(x)/ \pi$, which continuously interpolates between $\lim_{x \to -\infty} \beta(x) = 0.3$ 
-and $\lim_{x \to +\infty} \beta(x) = 0.75$.
-For two different time scale parameters $T_0 = 1$ and $T_0 = 10$, we have simulated 15,000 trajectories \cite{var-order-MC} with both diffusivity and drift $a(x) = b(x) = T_0^{-\beta(x)}$
-at $c = 200$, where jumps and waiting times are as specified in \eqref{eq:example-kernel}. The value $c = 200$ was chosen so that the mean number of steps at the smallest time $t = 1/8$ was above $30$. The trajectories were evaluated at 7 different times, and a kernel density estimator (with automated bandwidth selection) was applied
-to the empirical distributions at each time.  The plots are nearly identical, supporting the correctness of the variable order fractional Fokker-Planck equation at varying time scales \eqref{eq:FFPE-with-scale}. 
+\begin{figure}
+  \centering
+  \includegraphics{beta_b}
+  \caption{\label{fig:beta_b}Coefficients imitating the interface problem from \cite{Korabel2010}.}
+\end{figure}
+
+We aim to reproduce this interface problem, and 
+let the anomalous exponent be $\beta(y) = 0.525 + 0.45 * \arctan(y/0.2)/ \pi$, 
+which interpolates smoothly between $\lim_{y \to -\infty} \beta(y) = 0.3$ 
+and $\lim_{y \to +\infty} \beta(y) = 0.75$, yet creates a sharp change at $y=0$, see Figure \ref{fig:beta_b}.
+For the drift $b(y,t)$, we use the density of a Gaussian distribution with 
+mean $0$ and standard deviation $0.2$, to approximate smoothly a 
+delta function pulse at $0$.
+The diffusivity $a(y,t) = 2$ is constant. 
+
+We check whether equation \eqref{eq:FFPE-with-scale} is consistent at two 
+different time scales, $T_0 = 1$ (second) and $T_0 = 10$ (seconds).
+If it is, then the probability densities of $X_t$ at the times 
+$1/8, 1, 8, 64$ for $T_0 = 1$ must be the same as the probability 
+densities at the times $10/8, 10, 80, 640$ at $T_0 = 10$.
+Observe that changing $T_0 = 1$ to 
+$T_0 = 10$ is equivalent to not changing $T_0$ the same and instead 
+dividing both $a(x,t)$ and $b(x,t)$ by $10^{\beta(x)}$. 
+We thus 
+simulated 10,000 trajectories with the two coefficients scenarios above, 
+at the scale 
+parameter $c = 200$ (view the R-code at \cite{var-order-MC}).
+The value $c = 200$ was chosen so that the mean number of steps at the smallest time $t = 1/8$ was above $30$. The trajectories were evaluated at 7 different times, and a kernel density estimator (with automated bandwidth selection) was applied
+to the empirical distributions at each time, thus producing a Monte Carlo 
+estimate of the probability distribution of $X_t$ at the different times 
+$1/8$, $1$, $8$ and $64$.
+The probability density estimates for $T_0$ are shown in the upper panel 
+in Figure \ref{fig:comparison}. 
+The lower panel shows the difference between these densities and the 
+densities for $a(x,t) / 10^{\beta(y)}$ and $b(x,t) / 10^{\beta(y)}$
+at the times $10/8, 10, 80, 640$. 
+This difference is seen to be falling within the expected Monte Carlo 
+fluctuations, uniformly below $0.04$ at all times. 
+This fact supports the consistency of the variable order fractional 
+Fokker-Planck equation at varying time scales \eqref{eq:FFPE-with-scale}. 
 
 \begin{figure}[h]
 \centering
-\includegraphics[width = 0.95\textwidth]{densities.pdf}
-\caption{Comparison of the dynamics of variable fractional order, at two different time scales $T_0$. For $T_0 = 1$ (left plot), diffusivity and drift are constant and equal to $1$; for $T_0 = 10$, these are equal to $T_0^{-\beta(x)}$. Both dynamics appear equivalent, thus supporting the variable order Fractional Fokker-Planck equation \eqref{eq:FFPE-with-scale}.}
+\includegraphics{densities.pdf}
+\caption{\label{fig:comparison}Comparison of the dynamics of variable fractional order, at two different time scales $T_0 = 1$ and $T_0 = 10$. The upper panel shows the probability densities for $T_0 = 1$ at different times, whereas the lower panel shows the difference between probability densities for $T_0 = 10$ and for $T_0 = 1$. For $T_0 = 1$ (left plot), diffusivity and drift are constant and equal to $1$; for $T_0 = 10$, these are equal to $T_0^{-\beta(x)}$. Both dynamics appear equivalent, thus supporting the variable order Fractional Fokker-Planck equation \eqref{eq:FFPE-with-scale}.}
 \end{figure}
 
 
@@ -884,6 +1043,34 @@ f_x(x,s) b(x,s) + o(1) + f_s(x,s) d(x) + o(1) + f_{xx}(x,s) a(x,s) + o(1)
 \end{align*}
 As $\varepsilon$ was arbitrary to begin with, we let $\varepsilon \downarrow 0$, 
 and the above equals $\mathcal A f(x,s)$. 
+
+\subsection{Proof of Theorem \ref{th:continuous-mapping}}
+\label{sec:app-pf-th2}
+
+Write $(y,z)$ for a generic path in $\spctim$, which is such that 
+$z$ is unbounded and non-decreasing.
+By Proposition 2.3 in \cite{StrakaHenry}, the following path mapping is 
+continuous on the subset of all paths $(y,z)$ which are such that $z$ is 
+strictly increasing: 
+$(y,z) \mapsto (y_- \circ z^{-1}_-)_+$, which composes the left-continuous 
+version of $y$ with the left-continuous version of the inverse 
+\begin{align}
+  z^{-1}(t) = \inf\{u: z(u) > t\}
+\end{align}
+and changes the resulting composition back to right-continuous again. 
+This path mapping maps the continuous time Markov chain paths 
+$u \mapsto (Y^{(c)}_u, Z^{(c)}_u)$ to the CTRW paths 
+$t \mapsto X^{(c)}_t$ (Lemma 3.5 in \cite{StrakaHenry}). 
+Since the limiting process $(Y_u, Z_u)$ has unbounded and strictly increasing 
+$Z_u$, with probability $1$ its samples paths lie in the set of continuity of 
+the above path mapping. 
+The continuous mapping theorem \cite{Billingsley1968} applies, saying that 
+$\lim_{c \to \infty}(Y^{(c)}_u, Z^{(c)}_u) = (Y_u, Z_u)$ with respect to $J_1$
+implies
+$\lim_{c \to \infty} X^{(c)}_t = (Y_- \circ Z^{-1}_-)_{t+}$ with respect to $J_1$. 
+Note that $Y_u$ has continuous paths, and so does $Z^{-1}_u$ because 
+$Z_u$ is strictly increasing. But then 
+$(Y_- \circ Z^{-1}_-)_{t+} = Y \circ Z^{-1} (t) = Y_{E(t)}$. 
 
 
 \subsection{Calculation for Example \ref{example}}
