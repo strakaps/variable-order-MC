@@ -4,10 +4,11 @@
 .Ruserdata
 editor/
 .DS_Store
+/*
 
 !.gitignore
 !*.bib
 !*.tex
 !*.Rmd
 !densities.pdf
-!*/
+
