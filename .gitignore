@@ -2,7 +2,8 @@
 .Rhistory
 .RData
 .Ruserdata
-* 
+editor/
+.DS_Store
 
 !.gitignore
 !*.bib
