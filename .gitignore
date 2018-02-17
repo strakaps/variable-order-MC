@@ -4,11 +4,16 @@
 .Ruserdata
 editor/
 .DS_Store
-/*
+*.aux
+*.bbl
+*.blg
+*latexmk
+*.fls
+*.log
+*.out
+*.spl
+*.synctex.gz
+*.pdf
 
-!.gitignore
-!*.bib
-!*.tex
-!*.Rmd
+!beta_b.pdf
 !densities.pdf
-
