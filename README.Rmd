@@ -1,7 +1,26 @@
 ---
-title: "Simulation of trajectories for variable order fractional diffusion"
+title: "Supplemental material"
 output: github_document
 ---
+
+Also see: 
+
+* My [Blogpost](https://strakaps.github.io/post/voffpe/) with a 
+  one page introduction to fractional diffusion
+* The pdf version of the article, available [here](/varyKern.pdf) 
+  and on the [arXiv](https://arxiv.org/abs/1712.06767)
+* The published paper at [Physica A](https://doi.org/10.1016/j.physa.2018.03.010)
+
+
+## Simulation of trajectories for variable order fractional diffusion
+
+The paper derives a "Variable Order Fractional Fokker-Planck Equation", 
+which has the strange property that a global change in the time-scale 
+(e.g. measure time in minutes instead of seconds) induces locally 
+different changes in the dynamics. 
+To check that the equation is consistent, we calculate (an approximation 
+of) the solution at two different time scales, $T_0 = 1$ and $T_0 = 10$. 
+
 
 ## Helper functions
 
