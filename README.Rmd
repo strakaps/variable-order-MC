@@ -12,6 +12,7 @@ Also see:
 * The published paper at [Physica A](https://doi.org/10.1016/j.physa.2018.03.010)
 
 
+
 ## Simulation of trajectories for variable order fractional diffusion
 
 The paper derives a "Variable Order Fractional Fokker-Planck Equation", 
